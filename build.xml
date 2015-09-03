@@ -1,0 +1,39 @@
+<project name="ivymaven-test" basedir="." default="maven" xmlns:ivy="antlib:org.apache.ivy.ant">
+	
+	<property name="maven.home" value="/opt/apache-maven" />
+	<property name="publish.file" value="test.jar" />
+	<property name="publish.pomFile" value="testpom.xml" />
+	<property name="group" value="pentaho-test" />
+	<property name="artifact" value="ivymaven-test" />
+	<property name="version" value="0.1" />
+	<property name="packaging" value="jar" />
+	
+	<target name="maven">
+	    <property environment="env" />
+		
+		<echo message="MAVEN_HOME=${env.MAVEN_HOME}" />
+		<echo message="M2_HOME=${env.M2_HOME}" />
+		
+	    <path id="classpath">
+	        <fileset dir="${maven.home}/boot">
+	            <include name="plexus-classworlds-*.jar" />
+	        </fileset>
+	    </path>
+	    <property name="mvn.mainclass" value="org.codehaus.plexus.classworlds.launcher.Launcher" />
+		
+	    <java classname="${mvn.mainclass}" classpathref="classpath" fork="true" failonerror="true">
+	        <jvmarg value="-Dclassworlds.conf=${maven.home}/bin/m2.conf" />
+	        <jvmarg value="-Dmaven.home=${maven.home}" />
+	    	<jvmarg value="-Dmaven.multiModuleProjectDirectory=${maven.home}" />
+	    	
+            <jvmarg value="-Dfile=${publish.file}"/>
+	    	<jvmarg value="-DgroupId=${group}"/>
+	    	<jvmarg value="-DartifactId=${artifact}"/>
+	    	<jvmarg value="-Dversion=${version}"/>
+	    	<jvmarg value="-Dpackaging=${packaging}"/>
+	    	
+	        <arg value="install:install-file" />
+	    </java>
+	</target>
+	
+</project>
