@@ -1,6 +1,5 @@
-<project name="ivymaven-test" basedir="." default="maven" xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="ivymaven-test" basedir="." default="maven">
 	
-	<property name="maven.home" value="/opt/apache-maven" />
 	<property name="publish.file" value="test.jar" />
 	<property name="publish.pomFile" value="testpom.xml" />
 	<property name="group" value="pentaho-test" />
@@ -11,8 +10,7 @@
 	<target name="maven">
 	    <property environment="env" />
 		
-		<echo message="MAVEN_HOME=${env.MAVEN_HOME}" />
-		<echo message="M2_HOME=${env.M2_HOME}" />
+		<property name="maven.home" value="${env.M2_HOME}" />
 		
 	    <path id="classpath">
 	        <fileset dir="${maven.home}/boot">
